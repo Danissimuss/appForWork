@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -52,6 +53,8 @@ android {
 
 dependencies {
 
+    val room_version = "2.6.1"
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -74,4 +77,20 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("com.jakewharton.threetenabp:threetenabp:1.4.7")
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    implementation("androidx.room:room-ktx:$room_version")
+
+    implementation("androidx.room:room-rxjava2:$room_version")
+
+    implementation("androidx.room:room-rxjava3:$room_version")
+
+    implementation("androidx.room:room-guava:$room_version")
+
+    implementation("androidx.room:room-paging:$room_version")
+
+    kapt ("androidx.room:room-compiler:$room_version")
 }

@@ -22,16 +22,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.ui.theme.Blue
 import com.example.hhtestus.ui.theme.DarkGrey02
+import com.example.hhtestus.ui.theme.Standart
+import com.example.hhtestus.ui.theme.White01
+import com.example.hhtestus.ui.theme.panel
 
 @Preview
 @Composable
-fun downPanel() {
+fun downPanel(navController: NavController) {
 
     var selectedItem by remember { mutableStateOf(0) }
 
@@ -75,14 +79,20 @@ fun downPanel() {
                         )
                     },
                     selected = selectedItem == index,
-                    onClick = { selectedItem = index },
+                    onClick = { selectedItem = index
+
+                        if (selectedItem == 1){
+                            navController.navigate("favScreen")
+                        }
+
+                              },
                     label = {Text(text = descriptions[index],
-                        fontSize = 8.sp)},
+                        fontSize = 12.sp, style = panel)},
                     modifier = Modifier.padding(top = 18.dp),
                     colors = NavigationBarItemDefaults.colors(
-                        unselectedIconColor = Color.White,
-                        selectedIconColor = Color.Blue,
-                        unselectedTextColor = Color.White,
+                        unselectedIconColor = White01,
+                        selectedIconColor = Blue,
+                        unselectedTextColor = White01,
                         selectedTextColor = Blue,
                         indicatorColor = Color.Transparent
                     ),

@@ -26,7 +26,7 @@ fun homeScreen(viewModel: SharedViewModel, navController: NavController){
         Text(text = " Вакансии для вас", style = Standart, fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 16.dp, start = 16.dp))
 
-        mainContent.mainView(viewModel = viewModel)
+        mainContent.mainView(viewModel = viewModel, navController = navController)
 
     }
 

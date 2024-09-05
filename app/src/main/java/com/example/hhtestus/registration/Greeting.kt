@@ -18,6 +18,6 @@ fun Greeting(navController: NavController) {
         GreetingTexts()
         EmailInputField(navController)
         JobSearchCard()
-        downPanel()
+        downPanel(navController)
     }
 }

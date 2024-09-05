@@ -22,3 +22,9 @@ val numb = TextStyle(
     color = White01,
     fontSize = 16.sp
 )
+val panel = TextStyle(
+    fontFamily = FontFamily(Font(R.font.sf_pro_display)),
+    fontWeight = FontWeight.Normal,
+    textAlign = TextAlign.Center,
+    fontSize = 16.sp
+)

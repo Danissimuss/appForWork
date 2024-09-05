@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.hhtestus.downPanel.favourite.favScreen
 import com.example.hhtestus.downPanel.home.homeScreen
 import com.example.hhtestus.registration.Greeting
 import com.example.hhtestus.validation.validationScreen
@@ -31,6 +32,12 @@ fun appNavigation(){
         composable("homeScreen") {
 
             homeScreen(navController = navController, viewModel = viewModel)
+
+        }
+
+        composable("favScreen"){
+
+            favScreen(viewModel)
 
         }
     }

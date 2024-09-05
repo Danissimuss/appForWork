@@ -1,6 +1,8 @@
 package com.example.hhtestus.downPanel.ApiSide
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 data class ApiResponse(
@@ -19,9 +21,10 @@ data class Button(
     val text: String
 ):Parcelable
 
+@Entity(tableName = "vacancies")
 @Parcelize
 data class Vacancy(
-    val id: String,
+   @PrimaryKey val id: String,
     val lookingNumber: Int,
     val title: String,
     val address: Address,
