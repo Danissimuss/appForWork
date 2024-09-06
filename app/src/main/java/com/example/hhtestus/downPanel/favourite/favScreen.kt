@@ -16,6 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -24,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.hhtestus.Navigation.SharedViewModel
 import com.example.hhtestus.downPanel.downPanel
 import com.example.hhtestus.downPanel.home.mainContent
+import com.example.hhtestus.downPanel.home.responceBottomSheet
 import com.example.hhtestus.downPanel.home.textForSearch
 import com.example.hhtestus.ui.theme.Black01
 import com.example.hhtestus.ui.theme.DarkGrey02
@@ -36,6 +40,7 @@ import com.example.hhtestus.ui.theme.White01
 fun favScreen(viewModel: SharedViewModel, navController: NavController) {
 
     val favVacancies by viewModel.getFavVac().observeAsState(emptyList())
+    var showDialog by remember { mutableStateOf(false) }
 
     val mainContent = mainContent()
 
@@ -92,7 +97,7 @@ fun favScreen(viewModel: SharedViewModel, navController: NavController) {
                             )
 
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = { showDialog = true },
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 colors = ButtonDefaults.buttonColors(
@@ -102,6 +107,11 @@ fun favScreen(viewModel: SharedViewModel, navController: NavController) {
                             ) {
 
                                 Text(text = "Откликнуться", style = Standart)
+
+                            }
+                            if (showDialog) {
+
+                                responceBottomSheet(vacancy, onDismiss = { showDialog = false })
 
                             }
                         }
