@@ -21,7 +21,7 @@ fun homeScreen(viewModel: SharedViewModel, navController: NavController){
 
         Search()
 
-        lazyRow(viewModel = viewModel)
+        offersList(viewModel = viewModel)
 
         Text(text = " Вакансии для вас", style = Standart, fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 16.dp, start = 16.dp))

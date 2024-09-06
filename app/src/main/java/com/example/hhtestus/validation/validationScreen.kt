@@ -33,18 +33,6 @@ import com.example.hhtestus.ui.theme.White01
 @Composable
 fun validationScreen(email: String?, navController:NavController, viewModel: SharedViewModel) {
 
-    var isLoading by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-
-    val responceAnsw = remember {
-        responceAnsw( RetrofitClient.apiService, viewModel, onError = {message ->
-            isLoading = false
-            errorMessage = message
-        }, onSuccess = {
-            navController.navigate("homeScreen")
-        })
-    }
-
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -68,23 +56,6 @@ fun validationScreen(email: String?, navController:NavController, viewModel: Sha
             fontSize = 20.sp
         )
 
-        codeDetector()
-
-        Button(
-            onClick = {
-                responceAnsw.fetchOff()
-
-            },
-            shape = RoundedCornerShape(6.dp),
-            modifier = Modifier
-                .padding(end = 16.dp, start = 16.dp)
-                .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Blue,
-                contentColor = Color.White
-            )
-        ) {
-            Text(text = "Подтвердить", style = Standart)
-        }
+        codeDetector(viewModel, navController)
     }
 }

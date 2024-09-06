@@ -45,9 +45,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 vacDao.delete(vacancy.copy(isFavorite = false))
             }
 
-            _vacancies.value = _vacancies.value?.map {
+            _vacancies.postValue(_vacancies.value?.map {
                 if (it.id == vacancy.id) it.copy(isFavorite = isFav) else it
-            }
+            })
         }
     }
 

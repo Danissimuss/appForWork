@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.example.hhtestus.Navigation.SharedViewModel
 
 @Composable
-fun lazyRow(viewModel: SharedViewModel){
+fun offersList(viewModel: SharedViewModel){
 
     val offers by viewModel.offers.observeAsState(emptyList())
 

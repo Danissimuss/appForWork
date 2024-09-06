@@ -37,7 +37,7 @@ fun appNavigation(){
 
         composable("favScreen"){
 
-            favScreen(viewModel)
+            favScreen(viewModel, navController)
 
         }
     }

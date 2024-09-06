@@ -81,8 +81,9 @@ fun downPanel(navController: NavController) {
                     selected = selectedItem == index,
                     onClick = { selectedItem = index
 
-                        if (selectedItem == 1){
-                            navController.navigate("favScreen")
+                        when (selectedItem) {
+                            0 -> navController.navigate("homeScreen")
+                            1 -> navController.navigate("favScreen")
                         }
 
                               },

@@ -14,13 +14,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetDefaults
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -59,7 +64,7 @@ import java.util.Locale
 
 class mainContent {
 
-    private fun formateDate(inputDate: String): String {
+    fun formateDate(inputDate: String): String {
 
         val date = org.threeten.bp.LocalDate.parse(inputDate)
         val formatter = org.threeten.bp.format
@@ -68,7 +73,7 @@ class mainContent {
         return date.format(formatter)
     }
 
-    private fun formatVac(count: Int): String {
+    fun formatVac(count: Int): String {
 
         return when {
             count % 10 == 1 && count % 100 != 11 -> "$count вакансия"
@@ -83,6 +88,7 @@ class mainContent {
 
         val listState = rememberLazyListState()
         val showButton = remember { mutableStateOf(false) }
+
         val vacancies by viewModel.vacancies.observeAsState(emptyList())
 
         LaunchedEffect(listState) {
@@ -163,36 +169,18 @@ class mainContent {
     fun vacList(vacancy: Vacancy, viewModel: SharedViewModel) {
 
         var isFavorite by remember { mutableStateOf(vacancy.isFavorite) }
+        var showDialog by remember { mutableStateOf(false)}
 
-        val watchers = vacancy.lookingNumber
 
-        val annotatedText = buildAnnotatedString {
-            withStyle(style = SpanStyle(color = Green)) {
-                val ending = when {
-                    watchers % 100 in 11..14 -> "человек"
-                    watchers % 10 in 2..4 -> "человека"
-                    else -> "человек"
-                }
-                append("Сейчас просматривает $watchers $ending")
-            }
+            LaunchedEffect(isFavorite){
+
+                isFavorite = vacancy.isFavorite
+
+                viewModel.updateFav(
+                    vacancy.copy(isFavorite = isFavorite),
+                    isFavorite
+                )
         }
-
-        LaunchedEffect(vacancy) {
-
-            isFavorite = vacancy.isFavorite
-
-            viewModel.updateFav(vacancy.copy(isFavorite = isFavorite), isFavorite)
-        }
-
-
-
-        val context = LocalContext.current
-
-        val imageHolder = ImageLoader.Builder(context)
-            .components {
-                add(SvgDecoder.Factory())
-            }
-            .build()
 
         Card(
             modifier = Modifier
@@ -208,119 +196,10 @@ class mainContent {
                     .fillMaxWidth(),
             ) {
 
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        text = annotatedText,
-                        style = Standart,
-                        fontSize = 12.sp
-                    )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(start = 300.dp)
-                    ) {
-
-                        val imageRes = if (isFavorite) R.raw.favourite_filled else R.raw.favourite
-
-                        AsyncImage(
-                            model = ImageRequest.Builder(context)
-                                .data("android.resource://${context.packageName}/raw/$imageRes")
-                                .build(),
-                            contentDescription = if (isFavorite) "Fav" else "NotFav",
-                            imageLoader = imageHolder,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clickable {
-                                    isFavorite = !isFavorite
-                                    viewModel.updateFav(
-                                        vacancy.copy(isFavorite = isFavorite),
-                                        isFavorite
-                                    )
-                                }
-                        )
-
-                    }
-                }
-
-                Text(
-                    text = vacancy.title,
-                    modifier = Modifier.padding(top = 3.dp, end = 16.dp),
-                    style = Standart
-                )
-
-                vacancy.salary.short?.let {
-                    Text(
-                        text = it,
-                        modifier = Modifier.padding(top = 10.dp), style = Standart, fontSize = 20.sp
-                    )
-                }
-
-                Text(
-                    text = vacancy.address.town,
-                    modifier = Modifier.padding(top = 10.dp),
-                    style = Standart,
-                    fontSize = 14.sp
-                )
-
-                Row (modifier = Modifier.padding(top = 5.dp)) {
-
-                    Text(
-                        text = vacancy.company,
-                        modifier = Modifier.padding(top = 4.dp, end = 6.dp),
-                        style = Standart,
-                        fontSize = 14.sp
-                    )
-
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(
-                                "android.resource://${context.packageName}" +
-                                        "/raw/valid"
-                            )
-                            .build(),
-                        contentDescription = "Valid",
-                        imageLoader = imageHolder,
-                        modifier = Modifier
-                            .size(18.dp)
-                            .padding(end = 6.dp, top = 6.dp)
-                    )
-
-                }
-
-                Row(
-                    modifier = Modifier.padding(top = 5.dp)
-                ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(
-                                "android.resource://${context.packageName}" +
-                                        "/raw/work"
-                            )
-                            .build(),
-                        contentDescription = "Work",
-                        imageLoader = imageHolder,
-                        modifier = Modifier
-                            .size(20.dp)
-                            .padding(end = 6.dp, top = 6.dp)
-                    )
-
-                    Text(
-                        text = vacancy.experience.previewText,
-                        modifier = Modifier.padding(top = 5.dp),
-                        style = Standart,
-                        fontSize = 14.sp
-                    )
-                }
-                Text(
-                    text = "Опубликовано: " + formateDate(vacancy.publishedDate),
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
-                    style = Standart,
-                    color = LightGrey02,
-                    fontSize = 14.sp
-                )
+                textForSearch(viewModel = viewModel, vacancy = vacancy)
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { showDialog = true },
                     modifier = Modifier
                         .fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
@@ -333,9 +212,16 @@ class mainContent {
 
                 }
 
+                if (showDialog) {
+
+
+                }
+
             }
 
         }
 
     }
 }
+
+

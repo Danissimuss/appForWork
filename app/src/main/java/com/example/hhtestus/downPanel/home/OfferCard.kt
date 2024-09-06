@@ -2,6 +2,7 @@ package com.example.hhtestus.downPanel.home
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -47,9 +48,12 @@ fun OfferCard(offer: Offer) {
         }
     }
 
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("${offer.link}"))
+
     Card(
         modifier = Modifier
-            .padding(start = 8.dp),
+            .padding(start = 8.dp)
+            .clickable { context.startActivity(intent) },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(DarkGrey02)
     ) {
@@ -78,7 +82,7 @@ fun OfferCard(offer: Offer) {
 
 
 
-            Text(text = offer.title, color = White01, fontSize = 14.sp,
+            Text(text = offer.title.trim(), color = White01, fontSize = 14.sp,
                 modifier = Modifier.padding(top = 16.dp, start = 8.dp))
             
             if (offer.id == "level_up_resume"){
@@ -86,7 +90,6 @@ fun OfferCard(offer: Offer) {
                     top = 4.dp,
                     start = 8.dp),
                     onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("${offer.link}"))
                         context.startActivity(intent)
                     })
 
