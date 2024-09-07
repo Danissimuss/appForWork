@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.example.hhtestus.Navigation.SharedViewModel
 import com.example.hhtestus.downPanel.downPanel
 import com.example.hhtestus.downPanel.home.mainContent
-import com.example.hhtestus.downPanel.home.responceBottomSheet
+import com.example.hhtestus.downPanel.home.responseBottomSheet
 import com.example.hhtestus.downPanel.home.textForSearch
 import com.example.hhtestus.ui.theme.Black01
 import com.example.hhtestus.ui.theme.DarkGrey02
@@ -65,7 +65,7 @@ fun favScreen(viewModel: SharedViewModel, navController: NavController) {
         )
 
         Scaffold(
-            bottomBar = { downPanel(navController) },
+            bottomBar = { downPanel(navController, viewModel) },
             containerColor = Black01
         ) { innerPadding ->
             LazyColumn(
@@ -111,7 +111,7 @@ fun favScreen(viewModel: SharedViewModel, navController: NavController) {
                             }
                             if (showDialog) {
 
-                                responceBottomSheet(vacancy, onDismiss = { showDialog = false })
+                                responseBottomSheet(vacancy, onDismiss = { showDialog = false })
 
                             }
                         }

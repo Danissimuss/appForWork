@@ -8,7 +8,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.hhtestus.downPanel.favourite.favScreen
+import com.example.hhtestus.downPanel.home.allVac.allVac
 import com.example.hhtestus.downPanel.home.homeScreen
+import com.example.hhtestus.downPanel.home.vacCard.vacancyCard
+import com.example.hhtestus.downPanel.plug.bladerunnerScreen
+import com.example.hhtestus.downPanel.plug.driveScreen
+import com.example.hhtestus.downPanel.plug.goslingScreen
 import com.example.hhtestus.registration.Greeting
 import com.example.hhtestus.validation.validationScreen
 
@@ -20,7 +25,7 @@ fun appNavigation(){
     
     NavHost(navController = navController, startDestination = "greeting"){
         composable("greeting"){
-            Greeting(navController = navController)
+            Greeting(navController = navController, viewModel)
         }
         composable("second/{email}",
             arguments = listOf(navArgument("email") {type = NavType.StringType})){
@@ -39,6 +44,33 @@ fun appNavigation(){
 
             favScreen(viewModel, navController)
 
+        }
+
+        composable("goslingScreen") {
+
+            goslingScreen(navController, viewModel)
+        }
+
+        composable("driveScreen") {
+
+            driveScreen(viewModel, navController)
+        }
+
+        composable("bladerunnerScreen") {
+
+            bladerunnerScreen(navController, viewModel)
+        }
+
+        composable("allVac") {
+
+            allVac(navController, viewModel)
+        }
+        composable("vacancyCard") {
+
+            val selectedVacancy = viewModel.selectedVacancy
+            if (selectedVacancy != null) {
+                vacancyCard(viewModel = viewModel, vacancy = selectedVacancy, navController)
+            }
         }
     }
 }

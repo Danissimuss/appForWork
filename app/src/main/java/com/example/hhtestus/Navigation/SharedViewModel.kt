@@ -1,20 +1,24 @@
 package com.example.hhtestus.Navigation
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hhtestus.downPanel.ApiSide.Offer
 import com.example.hhtestus.downPanel.ApiSide.Vacancy
 import com.example.hhtestus.downPanel.dataBase.dataBase
 import com.example.hhtestus.downPanel.dataBase.vacDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
+
+    var selectedVacancy by mutableStateOf<Vacancy?>(null)
 
     private val _offers = MutableLiveData<List<Offer>>()
     val offers: LiveData<List<Offer>> get() = _offers
@@ -44,10 +48,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             } else {
                 vacDao.delete(vacancy.copy(isFavorite = false))
             }
-
-            _vacancies.postValue(_vacancies.value?.map {
-                if (it.id == vacancy.id) it.copy(isFavorite = isFav) else it
-            })
+            withContext(Dispatchers.Main) {
+                _vacancies.postValue(_vacancies.value?.map {
+                    if (it.id == vacancy.id) it.copy(isFavorite = isFav) else it
+                })
+            }
         }
     }
 

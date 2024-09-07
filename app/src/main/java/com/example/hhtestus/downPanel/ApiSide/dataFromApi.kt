@@ -35,7 +35,7 @@ data class Vacancy(
     val salary: Salary,
     val schedules: List<String>,
     val appliedNumber: Int,
-    val description: String,
+    val description: String?,
     val responsibilities: String,
     val questions: List<String>
 ): Parcelable

@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.hhtestus.downPanel.ApiSide.Converter
 import com.example.hhtestus.downPanel.ApiSide.Vacancy
 
-@Database(entities = [Vacancy::class], version = 1)
+@Database(entities = [Vacancy::class], version = 2)
 @TypeConverters(Converter::class)
 abstract class dataBase : RoomDatabase() {
 
@@ -25,7 +25,9 @@ abstract class dataBase : RoomDatabase() {
                     context.applicationContext,
                     dataBase::class.java,
                     "vacancy_db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

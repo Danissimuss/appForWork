@@ -1,6 +1,8 @@
 package com.example.hhtestus.downPanel.home
 
+import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,23 +21,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import com.example.hhtestus.ui.theme.DarkGrey01
+import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.DarkGrey02
 
-@Preview
 @Composable
-fun Search() {
+fun Search(
+    navController: NavController,
+    searchText: String = "Должность, ключевые слова",
+    searchIcon: String = "android.resource://${LocalContext.current.packageName}/raw/search"
+) {
 
     val context = LocalContext.current
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader = imageLoader(context = context)
+
+    val backIcon = "android.resource://${LocalContext.current.packageName}/raw/back"
 
     Row(
         modifier = Modifier
@@ -53,7 +57,7 @@ fun Search() {
             AsyncImage(
 
                 model = ImageRequest.Builder(context)
-                    .data("android.resource://${context.packageName}/raw/search") // Замените на ваш ресурс
+                    .data(searchIcon)
                     .build(),
 
                 contentDescription = "Search Icon",
@@ -62,12 +66,19 @@ fun Search() {
                 modifier = Modifier
                     .size(width = 24.dp, height = 24.dp)
                     .align(Alignment.CenterStart)
-                    .padding(start = 6.dp),
+                    .padding(start = 6.dp)
+                    .clickable {
+
+                        if (searchIcon == backIcon) {
+                            navController.popBackStack()
+                        }
+
+                    },
                 contentScale = ContentScale.Fit
             )
 
             Text(
-                text = "Должность, ключевые слова",
+                text = searchText,
                 color = Color.Gray,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
@@ -81,10 +92,10 @@ fun Search() {
             AsyncImage(
 
                 model = ImageRequest.Builder(context)
-                    .data("android.resource://${context.packageName}/raw/filter") // Замените на ваш ресурс
+                    .data("android.resource://${LocalContext.current.packageName}/raw/filter")
                     .build(),
 
-                contentDescription = "Email Icon",
+                contentDescription = "Filter Icon",
                 imageLoader = imageLoader,
 
                 modifier = Modifier

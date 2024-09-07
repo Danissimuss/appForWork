@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.downPanel.ApiSide.Offer
+import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.DarkGrey02
 import com.example.hhtestus.ui.theme.Green
 import com.example.hhtestus.ui.theme.White01
@@ -36,11 +37,8 @@ import com.example.hhtestus.ui.theme.White01
 fun OfferCard(offer: Offer) {
 
     val context = LocalContext.current
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+
+    val imageLoader = imageLoader(context = context)
 
     val annotatedText = buildAnnotatedString {
         withStyle(style = SpanStyle(color = Green, textDecoration = TextDecoration.Underline)) {

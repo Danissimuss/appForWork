@@ -1,5 +1,6 @@
 package com.example.hhtestus.downPanel
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,22 +13,24 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.hhtestus.Navigation.SharedViewModel
+import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.Blue
 import com.example.hhtestus.ui.theme.DarkGrey02
 import com.example.hhtestus.ui.theme.Standart
@@ -35,17 +38,16 @@ import com.example.hhtestus.ui.theme.White01
 import com.example.hhtestus.ui.theme.panel
 
 @Composable
-fun downPanel(navController: NavController) {
+fun downPanel(navController: NavController, viewModel: SharedViewModel) {
 
-    var selectedItem by rememberSaveable { mutableStateOf(0) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val favourites by viewModel.getFavVac().observeAsState(emptyList())
+
+    val favouritesCount = favourites.size
 
     val context = LocalContext.current
-
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader = imageLoader(context = context)
 
     Row {
 
@@ -57,37 +59,67 @@ fun downPanel(navController: NavController) {
                 .align(Alignment.Bottom)
         ) {
 
-            val icons = listOf("search", "favourite", "response", "message", "profile")
+            val items = listOf(
+                BottomNavItems.Home,
+                BottomNavItems.Fav,
+                BottomNavItems.Responce,
+                BottomNavItems.Message,
+                BottomNavItems.Profile
+            )
 
-            val iconsSelected = listOf("search_selected", "favourite", "response_selected",
-                "message", "profile_selected")
-
-            val descriptions = listOf("Поиск", "Избранное", "Отклики", "Сообщения", "Профиль")
-
-            icons.forEachIndexed { index, icon ->
+            items.forEachIndexed { _, item ->
                 NavigationBarItem(
                     icon = {
-                        AsyncImage(
-                            model = ImageRequest.Builder(context)
-                                .data("android.resource://${context.packageName}" +
-                                        "/raw/${if (selectedItem == index) iconsSelected[index]
-                                        else icon}")
-                                .build(),
-                            contentDescription = descriptions[index],
-                            imageLoader = imageLoader,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    },
-                    selected = selectedItem == index,
-                    onClick = { selectedItem = index
+                        Box {
 
-                        when (selectedItem) {
-                            0 -> navController.navigate("homeScreen")
-                            1 -> navController.navigate("favScreen")
+                            AsyncImage(
+                                model = ImageRequest.Builder(context)
+                                    .data("android.resource://${context.packageName}/raw/" +
+                                            "${if (currentRoute == item.route) item.iconSelected
+                                            else item.icon}")
+                                    .build(),
+                                contentDescription = item.label,
+                                imageLoader = imageLoader,
+                                modifier = Modifier.size(24.dp)
+                            )
+
+                            if (item == BottomNavItems.Fav && favouritesCount > 0) {
+                                Box (modifier = Modifier.padding(start = 14.dp)) {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(context)
+                                            .data(
+                                                "android.resource://${context.packageName}/raw/" +
+                                                        "bubble"
+                                            )
+                                            .build(),
+                                        contentDescription = item.label,
+                                        imageLoader = imageLoader,
+                                        modifier = Modifier
+                                            .size(13.dp)
+                                    )
+
+                                    Text(
+                                        text = favouritesCount.toString(),
+                                        style = Standart,
+                                        fontSize = 10.sp,
+                                        modifier = Modifier.padding(start = 4.dp)
+                                    )
+                                }
+                            }
+                        }
+                    },
+                    selected = currentRoute == item.route,
+                    onClick = {
+                        navController.navigate(item.route){
+                            popUpTo(navController.graph.startDestinationId){
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
 
                               },
-                    label = {Text(text = descriptions[index],
+                    label = {Text(text = item.label,
                         fontSize = 12.sp, style = panel)},
                     modifier = Modifier.padding(top = 18.dp),
                     colors = NavigationBarItemDefaults.colors(

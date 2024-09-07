@@ -1,4 +1,5 @@
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -13,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.hhtestus.registration.CardContainer
 import com.example.hhtestus.ui.theme.DarkGrey01
 import com.example.hhtestus.ui.theme.Green
 import com.example.hhtestus.ui.theme.Standart
@@ -24,7 +24,7 @@ fun JobSearchCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(end = 16.dp, start = 16.dp, bottom = 116.dp),
+            .padding(end = 16.dp, start = 16.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = MaterialTheme.shapes.small,
         colors = CardDefaults.cardColors(containerColor = DarkGrey01)
@@ -57,4 +57,5 @@ fun JobSearchCard() {
             }
         }
     }
+
 }

@@ -3,7 +3,6 @@ package com.example.hhtestus.downPanel.home
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -32,11 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.downPanel.ApiSide.Vacancy
+import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.DarkGrey02
 import com.example.hhtestus.ui.theme.Green
 import com.example.hhtestus.ui.theme.LightGrey01
@@ -48,7 +45,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun responceBottomSheet(vacTitle: Vacancy, onDismiss: () -> Unit) {
+fun responseBottomSheet(vacTitle: Vacancy, onDismiss: () -> Unit) {
 
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
@@ -58,11 +55,7 @@ fun responceBottomSheet(vacTitle: Vacancy, onDismiss: () -> Unit) {
     var text by remember { mutableStateOf("") }
 
     val context = LocalContext.current
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader = imageLoader(context = context)
 
     LaunchedEffect(sheetState) {
         if (sheetState.isVisible) {

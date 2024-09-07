@@ -9,7 +9,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hhtestus.Navigation.SharedViewModel
-import com.example.hhtestus.downPanel.downPanel
 import com.example.hhtestus.ui.theme.Standart
 
 @Composable
@@ -19,7 +18,7 @@ fun homeScreen(viewModel: SharedViewModel, navController: NavController){
 
     Column {
 
-        Search()
+        Search(navController)
 
         offersList(viewModel = viewModel)
 

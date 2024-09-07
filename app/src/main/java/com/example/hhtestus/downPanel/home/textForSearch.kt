@@ -8,10 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
@@ -26,6 +22,7 @@ import coil.request.ImageRequest
 import com.example.hhtestus.Navigation.SharedViewModel
 import com.example.hhtestus.R
 import com.example.hhtestus.downPanel.ApiSide.Vacancy
+import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.Green
 import com.example.hhtestus.ui.theme.LightGrey02
 import com.example.hhtestus.ui.theme.Standart
@@ -36,7 +33,6 @@ fun textForSearch(viewModel: SharedViewModel, vacancy: Vacancy){
     val isFavorite = vacancy.isFavorite
 
     val watchers = vacancy.lookingNumber
-    val context = LocalContext.current
 
     val annotatedText = buildAnnotatedString {
         withStyle(style = SpanStyle(color = Green)) {
@@ -48,11 +44,9 @@ fun textForSearch(viewModel: SharedViewModel, vacancy: Vacancy){
             append("Сейчас просматривает $watchers $ending")
         }
     }
-    val imageHolder = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+
+    val context = LocalContext.current
+    val imageHolder = imageLoader(context = context)
 
 
     Box(modifier = Modifier.fillMaxSize()) {

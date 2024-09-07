@@ -35,6 +35,7 @@ import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.DarkGrey02
 import com.example.hhtestus.ui.theme.LightGrey02
 import com.example.hhtestus.ui.theme.LightGrey03
@@ -52,11 +53,7 @@ fun EmailInputField(navController: NavController) {
     val isTextFieldNotEmpty = email.isNotEmpty()
 
     val context = LocalContext.current
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader = imageLoader(context = context)
 
 
     CardContainer {
@@ -110,7 +107,7 @@ fun EmailInputField(navController: NavController) {
                                 AsyncImage(
 
                                     model = ImageRequest.Builder(context)
-                                        .data("android.resource://${context.packageName}/raw/response") // Замените на ваш ресурс
+                                        .data("android.resource://${context.packageName}/raw/response")
                                         .build(),
 
                                     contentDescription = "Email Icon",
@@ -142,7 +139,7 @@ fun EmailInputField(navController: NavController) {
                             .align(Alignment.CenterEnd)
                             .background(Color.Transparent)
                             .graphicsLayer(
-                                scaleX = 0.75f, // Измените масштаб для тонкой иконки
+                                scaleX = 0.75f,
                                 scaleY = 0.75f
                             )) {
 
