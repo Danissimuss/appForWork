@@ -15,12 +15,11 @@ val Standart = TextStyle(
     color = White01,
     fontSize = 16.sp
 )
-val numb = TextStyle(
+val input = TextStyle(
     fontFamily = FontFamily(Font(R.font.sf_pro_display)),
     fontWeight = FontWeight.Normal,
-    textAlign = TextAlign.Center,
     color = White01,
-    fontSize = 16.sp
+    fontSize = 18.sp
 )
 val panel = TextStyle(
     fontFamily = FontFamily(Font(R.font.sf_pro_display)),

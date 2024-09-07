@@ -41,6 +41,7 @@ import com.example.hhtestus.ui.theme.LightGrey03
 import com.example.hhtestus.ui.theme.Red
 import com.example.hhtestus.ui.theme.Standart
 import com.example.hhtestus.ui.theme.White01
+import com.example.hhtestus.ui.theme.input
 
 @Preview
 @Composable
@@ -64,7 +65,7 @@ fun EmailInputField(navController: NavController) {
 
             Text(
                 text = "Поиск работы",
-                color = Color.White,
+                color = White01,
                 style = Standart,
                 modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
             )
@@ -97,7 +98,7 @@ fun EmailInputField(navController: NavController) {
 
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    textStyle = Standart,
+                    textStyle = input,
                     singleLine = true,
 
                     placeholder = {

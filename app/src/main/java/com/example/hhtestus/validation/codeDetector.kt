@@ -37,7 +37,6 @@ import com.example.hhtestus.ui.theme.DarkBlue
 import com.example.hhtestus.ui.theme.DarkGrey02
 import com.example.hhtestus.ui.theme.Standart
 import com.example.hhtestus.ui.theme.White01
-import com.example.hhtestus.ui.theme.numb
 
 @Composable
 fun codeDetector(viewModel: SharedViewModel, navController:NavController){
@@ -92,7 +91,7 @@ fun codeDetector(viewModel: SharedViewModel, navController:NavController){
                     cursorColor = White01
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                textStyle = numb,
+                textStyle = Standart,
                 singleLine = true,
                 placeholder = { Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = "*",

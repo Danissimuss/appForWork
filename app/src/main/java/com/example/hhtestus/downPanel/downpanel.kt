@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +34,10 @@ import com.example.hhtestus.ui.theme.Standart
 import com.example.hhtestus.ui.theme.White01
 import com.example.hhtestus.ui.theme.panel
 
-@Preview
 @Composable
 fun downPanel(navController: NavController) {
 
-    var selectedItem by remember { mutableStateOf(0) }
+    var selectedItem by rememberSaveable { mutableStateOf(0) }
 
     val context = LocalContext.current
 
@@ -101,5 +101,4 @@ fun downPanel(navController: NavController) {
             }
         }
     }
-
 }
