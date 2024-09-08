@@ -35,6 +35,7 @@ import com.example.hhtestus.downPanel.ApiSide.RetrofitClient
 import com.example.hhtestus.ui.theme.Blue
 import com.example.hhtestus.ui.theme.DarkBlue
 import com.example.hhtestus.ui.theme.DarkGrey02
+import com.example.hhtestus.ui.theme.LightGrey02
 import com.example.hhtestus.ui.theme.Standart
 import com.example.hhtestus.ui.theme.White01
 
@@ -120,7 +121,9 @@ fun codeDetector(viewModel: SharedViewModel, navController:NavController){
             contentColor = White01
         )
     ) {
-        Text(text = "Подтвердить", style = Standart)
+        Text(text = "Подтвердить",
+            color = if (allfilledfields) White01 else LightGrey02,
+            style = Standart)
     }
 
 }

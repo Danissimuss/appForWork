@@ -2,6 +2,7 @@ package com.example.hhtestus.downPanel.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,33 +36,31 @@ fun textForSearch(viewModel: SharedViewModel, vacancy: Vacancy){
     val context = LocalContext.current
     val imageHolder = imageLoader(context = context)
 
+Row {
 
-    Box(modifier = Modifier.fillMaxSize()) {
+
         Text(
             text = "Сейчас просматривает $annotatedText",
             style = Standart,
             color = Green,
             fontSize = 12.sp
         )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 300.dp)
-        ) {
 
-            val imageRes = if (isFavorite) R.raw.favourite_filled else R.raw.favourite
 
-            clickableImage(
-                context = context,
-                imageRes = imageRes,
-                isFavorite = isFavorite,
-                imageLoader = imageHolder,
-                viewModel = viewModel,
-                vacancy = vacancy
-            )
+        Spacer(modifier = Modifier.weight(1f))
 
-        }
-    }
+
+        val imageRes = if (isFavorite) R.raw.favourite_filled else R.raw.favourite
+
+        clickableImage(
+            context = context,
+            imageRes = imageRes,
+            isFavorite = isFavorite,
+            imageLoader = imageHolder,
+            viewModel = viewModel,
+            vacancy = vacancy
+        )
+}
 
     Text(
         text = vacancy.title,

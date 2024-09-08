@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hhtestus.ui.theme.Blue
 import com.example.hhtestus.ui.theme.DarkBlue
+import com.example.hhtestus.ui.theme.LightGrey02
 import com.example.hhtestus.ui.theme.Standart
+import com.example.hhtestus.ui.theme.White01
 
 @Composable
 fun ActionButtons(email: String, onSubmit: (String)-> Unit) {
@@ -26,23 +28,25 @@ fun ActionButtons(email: String, onSubmit: (String)-> Unit) {
             .fillMaxWidth()
             .padding(top = 16.dp)
     ) {
-
-        Button(onClick = { onSubmit(email)},
-            shape = RoundedCornerShape(6.dp),
-            modifier = Modifier
-                .padding(bottom = 24.dp)
-                .fillMaxWidth()
-                .weight(1f),
-            colors = ButtonDefaults.buttonColors(
+            Button(
+                onClick = { onSubmit(email) },
+                shape = RoundedCornerShape(6.dp),
+                modifier = Modifier
+                    .padding(bottom = 24.dp)
+                    .fillMaxWidth()
+                    .weight(1f),
+                colors = ButtonDefaults.buttonColors(
                     containerColor = if (email.isNotEmpty()) Blue else DarkBlue,
                     contentColor = Color.White
-            )
+                )
 
-        ) {
-            Text(text = "Продолжить",
-                style = Standart)
-        }
-
+            ) {
+                Text(
+                    text = "Продолжить",
+                    style = Standart,
+                    color = if (email.isNotEmpty()) White01 else LightGrey02
+                )
+            }
         Spacer(modifier = Modifier.width(24.dp))
 
         Text(

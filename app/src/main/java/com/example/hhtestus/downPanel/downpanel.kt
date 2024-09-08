@@ -2,7 +2,6 @@ package com.example.hhtestus.downPanel
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,9 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,9 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.Navigation.SharedViewModel
 import com.example.hhtestus.imageBuilder.imageLoader
@@ -49,6 +43,8 @@ fun downPanel(navController: NavController, viewModel: SharedViewModel) {
     val context = LocalContext.current
     val imageLoader = imageLoader(context = context)
 
+    val isStartScreen = currentRoute == "greeting"
+
     Row {
 
         NavigationBar(
@@ -68,15 +64,21 @@ fun downPanel(navController: NavController, viewModel: SharedViewModel) {
             )
 
             items.forEachIndexed { _, item ->
+
+                val iconRes = if (currentRoute == item.route) {
+                    item.iconSelected
+                } else if (currentRoute == "allVac" && item is BottomNavItems.Home) {
+                    BottomNavItems.Home.iconSelected
+                } else {
+                    item.icon
+                }
+
                 NavigationBarItem(
                     icon = {
                         Box {
-
                             AsyncImage(
                                 model = ImageRequest.Builder(context)
-                                    .data("android.resource://${context.packageName}/raw/" +
-                                            "${if (currentRoute == item.route) item.iconSelected
-                                            else item.icon}")
+                                    .data("android.resource://${context.packageName}/raw/$iconRes")
                                     .build(),
                                 contentDescription = item.label,
                                 imageLoader = imageLoader,
@@ -110,12 +112,14 @@ fun downPanel(navController: NavController, viewModel: SharedViewModel) {
                     },
                     selected = currentRoute == item.route,
                     onClick = {
-                        navController.navigate(item.route){
-                            popUpTo(navController.graph.startDestinationId){
+                        if (!isStartScreen){
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
                             launchSingleTop = true
                             restoreState = true
+                        }
                         }
 
                               },
