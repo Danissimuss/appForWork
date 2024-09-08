@@ -92,5 +92,7 @@ dependencies {
 
     implementation("androidx.room:room-paging:$room_version")
 
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
+
     kapt ("androidx.room:room-compiler:$room_version")
 }

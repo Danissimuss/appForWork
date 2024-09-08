@@ -1,5 +1,6 @@
 package com.example.hhtestus.downPanel.favourite
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -81,7 +82,10 @@ fun favScreen(viewModel: SharedViewModel, navController: NavController) {
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 8.dp),
+                            .padding(bottom = 16.dp, start = 8.dp)
+                            .clickable {
+                                viewModel.selectedVacancy = vacancy
+                                navController.navigate("vacancyCard") },
                         shape = RoundedCornerShape(8.dp),
                         colors = CardDefaults.cardColors(DarkGrey02)
                     ) {

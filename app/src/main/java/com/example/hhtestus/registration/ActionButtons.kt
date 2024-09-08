@@ -26,6 +26,7 @@ fun ActionButtons(email: String, onSubmit: (String)-> Unit) {
             .fillMaxWidth()
             .padding(top = 16.dp)
     ) {
+
         Button(onClick = { onSubmit(email)},
             shape = RoundedCornerShape(6.dp),
             modifier = Modifier
@@ -33,7 +34,7 @@ fun ActionButtons(email: String, onSubmit: (String)-> Unit) {
                 .fillMaxWidth()
                 .weight(1f),
             colors = ButtonDefaults.buttonColors(
-                    containerColor = if (email.isNotEmpty()) Blue else DarkBlue,// Цвет фона кнопки
+                    containerColor = if (email.isNotEmpty()) Blue else DarkBlue,
                     contentColor = Color.White
             )
 

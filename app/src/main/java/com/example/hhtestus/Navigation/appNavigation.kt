@@ -10,7 +10,7 @@ import androidx.navigation.navArgument
 import com.example.hhtestus.downPanel.favourite.favScreen
 import com.example.hhtestus.downPanel.home.allVac.allVac
 import com.example.hhtestus.downPanel.home.homeScreen
-import com.example.hhtestus.downPanel.home.vacCard.vacancyCard
+import com.example.hhtestus.downPanel.home.vacCard.VacancyCard
 import com.example.hhtestus.downPanel.plug.bladerunnerScreen
 import com.example.hhtestus.downPanel.plug.driveScreen
 import com.example.hhtestus.downPanel.plug.goslingScreen
@@ -69,7 +69,7 @@ fun appNavigation(){
 
             val selectedVacancy = viewModel.selectedVacancy
             if (selectedVacancy != null) {
-                vacancyCard(viewModel = viewModel, vacancy = selectedVacancy, navController)
+                VacancyCard(viewModel = viewModel, vacancy = selectedVacancy, navController)
             }
         }
     }

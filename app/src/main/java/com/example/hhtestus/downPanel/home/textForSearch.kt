@@ -1,6 +1,5 @@
 package com.example.hhtestus.downPanel.home
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,19 +9,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.Navigation.SharedViewModel
 import com.example.hhtestus.R
 import com.example.hhtestus.downPanel.ApiSide.Vacancy
+import com.example.hhtestus.downPanel.favourite.clickableImage
 import com.example.hhtestus.imageBuilder.imageLoader
+import com.example.hhtestus.textCorrector.textCorrection
 import com.example.hhtestus.ui.theme.Green
 import com.example.hhtestus.ui.theme.LightGrey02
 import com.example.hhtestus.ui.theme.Standart
@@ -34,16 +30,7 @@ fun textForSearch(viewModel: SharedViewModel, vacancy: Vacancy){
 
     val watchers = vacancy.lookingNumber
 
-    val annotatedText = buildAnnotatedString {
-        withStyle(style = SpanStyle(color = Green)) {
-            val ending = when {
-                watchers % 100 in 11..14 -> "человек"
-                watchers % 10 in 2..4 -> "человека"
-                else -> "человек"
-            }
-            append("Сейчас просматривает $watchers $ending")
-        }
-    }
+    val annotatedText = textCorrection(watchers, Green)
 
     val context = LocalContext.current
     val imageHolder = imageLoader(context = context)
@@ -51,8 +38,9 @@ fun textForSearch(viewModel: SharedViewModel, vacancy: Vacancy){
 
     Box(modifier = Modifier.fillMaxSize()) {
         Text(
-            text = annotatedText,
+            text = "Сейчас просматривает $annotatedText",
             style = Standart,
+            color = Green,
             fontSize = 12.sp
         )
         Box(
@@ -63,20 +51,13 @@ fun textForSearch(viewModel: SharedViewModel, vacancy: Vacancy){
 
             val imageRes = if (isFavorite) R.raw.favourite_filled else R.raw.favourite
 
-            AsyncImage(
-                model = ImageRequest.Builder(context)
-                    .data("android.resource://${context.packageName}/raw/$imageRes")
-                    .build(),
-                contentDescription = if (isFavorite) "Fav" else "NotFav",
+            clickableImage(
+                context = context,
+                imageRes = imageRes,
+                isFavorite = isFavorite,
                 imageLoader = imageHolder,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        viewModel.updateFav(
-                            vacancy.copy(isFavorite = !isFavorite),
-                            !isFavorite
-                        )
-                    }
+                viewModel = viewModel,
+                vacancy = vacancy
             )
 
         }
