@@ -1,10 +1,7 @@
 package com.example.hhtestus.downPanel.home
 
-import android.annotation.SuppressLint
-import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.lifecycle.viewModelScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,9 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.hhtestus.Navigation.SharedViewModel
-import com.example.hhtestus.Navigation.responceAnsw
-import com.example.hhtestus.downPanel.ApiSide.ApiService
-import com.example.hhtestus.downPanel.ApiSide.RetrofitClient
 import com.example.hhtestus.downPanel.ApiSide.Vacancy
 import com.example.hhtestus.downPanel.downPanel
 import com.example.hhtestus.downPanel.response.responseApi
@@ -46,9 +40,6 @@ import com.example.hhtestus.ui.theme.DarkGrey02
 import com.example.hhtestus.ui.theme.Green
 import com.example.hhtestus.ui.theme.Standart
 import com.example.hhtestus.ui.theme.White01
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class mainContent {

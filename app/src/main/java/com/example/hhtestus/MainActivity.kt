@@ -9,10 +9,13 @@ import com.example.hhtestus.ui.theme.HHtestusTheme
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         AndroidThreeTen.init(this)
         enableEdgeToEdge()
+
         setContent {
                 HHtestusTheme {
                     appNavigation()

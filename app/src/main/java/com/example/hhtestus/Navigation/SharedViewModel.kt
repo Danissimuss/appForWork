@@ -16,7 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SharedViewModel(application: Application) : AndroidViewModel(application) {
+class SharedViewModel (
+    application: Application
+) : AndroidViewModel(application) {
 
     var selectedVacancy by mutableStateOf<Vacancy?>(null)
 

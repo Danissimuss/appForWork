@@ -18,7 +18,7 @@ object RetrofitClient {
 
 
 interface ApiService {
-    @GET("u/0/uc?id=1z4TbeDkbfXkvgpoJprXbN85uCcD7f00r&export=download") // Замените на реальный эндпоинт API
+    @GET("u/0/uc?id=1z4TbeDkbfXkvgpoJprXbN85uCcD7f00r&export=download")
     suspend fun getOffersAndVacancies(): ApiResponse
 }
 

@@ -23,9 +23,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.downPanel.ApiSide.Offer
 import com.example.hhtestus.imageBuilder.imageLoader
@@ -65,7 +63,7 @@ fun OfferCard(offer: Offer) {
             AsyncImage(
 
                 model = ImageRequest.Builder(context)
-                    .data("android.resource://${context.packageName}/raw/${offer.id}") // Замените на ваш ресурс
+                    .data("android.resource://${context.packageName}/raw/${offer.id}")
                     .build(),
 
                 contentDescription = "LazyRow",

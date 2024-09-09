@@ -28,12 +28,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.hhtestus.imageBuilder.imageLoader
 import com.example.hhtestus.ui.theme.DarkGrey02
@@ -44,7 +41,6 @@ import com.example.hhtestus.ui.theme.Standart
 import com.example.hhtestus.ui.theme.White01
 import com.example.hhtestus.ui.theme.input
 
-@Preview
 @Composable
 fun EmailInputField(navController: NavController) {
 

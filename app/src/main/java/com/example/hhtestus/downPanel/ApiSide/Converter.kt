@@ -16,7 +16,6 @@ class Converter {
         return Gson().fromJson(addressString, Address::class.java)
     }
 
-    // Experience
     @TypeConverter
     fun fromExperience(experience: Experience?): String? {
         return Gson().toJson(experience)
@@ -27,7 +26,6 @@ class Converter {
         return Gson().fromJson(experienceString, Experience::class.java)
     }
 
-    // Salary
     @TypeConverter
     fun fromSalary(salary: Salary?): String? {
         return Gson().toJson(salary)
@@ -38,7 +36,6 @@ class Converter {
         return Gson().fromJson(salaryString, Salary::class.java)
     }
 
-    // List<String> (для всех списков строк)
     @TypeConverter
     fun fromStringList(list: List<String>?): String? {
         return Gson().toJson(list)

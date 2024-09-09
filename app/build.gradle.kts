@@ -95,4 +95,5 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 
     kapt ("androidx.room:room-compiler:$room_version")
+
 }

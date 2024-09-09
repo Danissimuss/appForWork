@@ -1,5 +1,4 @@
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -50,7 +49,7 @@ fun JobSearchCard() {
                     .fillMaxWidth()
                     .padding(bottom = 24.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Green,  // Цвет фона кнопки
+                    containerColor = Green,
                     contentColor = Color.White)) {
                 Text(text = "Я ищу сотрудников",
                     style = Standart)

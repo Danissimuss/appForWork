@@ -105,7 +105,7 @@ fun favScreen(viewModel: SharedViewModel, navController: NavController) {
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Green,  // Цвет фона кнопки
+                                    containerColor = Green,
                                     contentColor = Color.White
                                 )
                             ) {
